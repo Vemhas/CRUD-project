@@ -1,7 +1,6 @@
 #!/usr/bin/env python2
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 import cgi
-import bleach
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Restaurant, Base, MenuItem
@@ -27,8 +26,8 @@ class webserverHandler(BaseHTTPRequestHandler):
                 for restaurant in restaurants:
                     output += restaurant.name
                     output += "<br>"
-                    output += """<a href="restaurants/%s/edit">Edit</a> <br>""" % restaurant.id
-                    output += """<a href="restaurants/%s/edit">Delete</a> <br> <br> <br>""" % restaurant.id
+                    output += """<a href="restaurants/%s/edit">edit</a> <br>""" % restaurant.id
+                    output += """<a href="restaurants/%s/delete">delete</a> <br>""" % restaurant.id
                 output += "</body></html>" 
                 self.wfile.write(output)
                 return
@@ -63,6 +62,24 @@ class webserverHandler(BaseHTTPRequestHandler):
                     output += "</body></html>"
                     self.wfile.write(output)
                     return
+                    
+            if self.path.endswith("/delete"):
+                restaurantIdPath = self.path.split("/")[2]
+                restaurant = session.query(Restaurant).filter_by(id = restaurantIdPath).one()
+                if restaurant:
+                        self.send_response(200)
+                        self.send_header('content-type', 'text/html')
+                        self.end_headers()
+
+                        output = ""
+                        output += "<html><body>"
+                        output += "<h2>Are you sure you want to delete: <h1>%s</h1></h2>" % restaurant.name
+                        output += "<form method='post' enctype='multipart/form-data' action='/restaurants/%s/delete'>" % restaurantIdPath
+                        output += "<input type='submit' value='Delete'>"
+                        output += "</form>"
+                        output += "</body></html>"
+                        self.wfile.write(output)
+                        return
 
         except IOError:
             self.send_error(404 - "File Not Found %s" % self.path)
@@ -89,14 +106,8 @@ class webserverHandler(BaseHTTPRequestHandler):
                 if ctype == 'multipart/form-data':
                     fields = cgi.parse_multipart(self.rfile, pdict)
                     newRestaurantName = fields.get('renameRestaurant')
-                    print(newRestaurantName)
-                    print("newRestaurantName")
                     restaurantIdPath = self.path.split("/")[2]
-                    print(restaurantIdPath)
-                    print("restaurantIdPath")
                     restaurantQuery = session.query(Restaurant).filter_by(id = restaurantIdPath).one()
-                    print(restaurantQuery.name)
-                    print("restaurantQuery")
                     if restaurantQuery != []:
                         restaurantQuery.name = newRestaurantName[0]
                         session.add(restaurantQuery)
@@ -105,6 +116,18 @@ class webserverHandler(BaseHTTPRequestHandler):
                     self.send_header('Content-type', 'text/html')
                     self.send_header('Location', '/restaurants')
                     self.end_headers()
+
+            if self.path.endswith("/delete"):
+                restaurantIdPath = self.path.split("/")[2] 
+                deleteRestaurant = session.query(Restaurant).filter_by(id = restaurantIdPath).one()
+                if deleteRestaurant != []:
+                    session.delete(deleteRestaurant)
+                    session.commit()
+                    self.send_response(301)
+                    self.send_header('Content-type', 'text/html')
+                    self.send_header('Location', '/restaurants')
+                    self.end_headers()
+                    
 
         except:
             pass
