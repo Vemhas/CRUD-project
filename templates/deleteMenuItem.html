@@ -1,0 +1,7 @@
+<h1>Are you sure you want to delete this menu item?</h1>
+<h1>{{item.name}}</h1>
+<form action="/restaurant/{{restaurant.id}}/{{item.id}}/delete/" method="POST">
+    <input type="submit" value="Delete">
+    <a href="/restaurant/{{restaurant.id}}/menu/"> Cancel</a>
+</form>
+

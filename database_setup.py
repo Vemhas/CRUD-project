@@ -30,11 +30,11 @@ class MenuItem(Base):
     def serialize(self):
        
        return {
-           'name'         : self.name,
-           'description'         : self.description,
-           'id'         : self.id,
-           'price'         : self.price,
-           'course'         : self.course,
+           'name': self.name,
+           'description': self.description,
+           'id': self.id,
+           'price': self.price,
+           'course': self.course,
        }
  
 

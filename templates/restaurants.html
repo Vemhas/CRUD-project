@@ -1,0 +1,16 @@
+<html>
+   <body>
+    <h1>All the availible restaurants</h1>
+    <ul>
+        {%for restaurant in restaurants:%}
+        <li>{{restaurant.name}}</li>
+        <li>{{restaurant.id}}</li>
+        <a href="{{url_for('showMenu', restaurant_id=restaurant.id)}}">Check out the menu at {{restaurant.name}}</a>
+        <br>
+        {% endfor %}
+    </ul>
+    <a href="/restaurant/new/">Create a New restaurant</a>
+    
+
+   </body> 
+</html>

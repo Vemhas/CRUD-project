@@ -1,0 +1,8 @@
+<h1>Update restaurant name</h1> 
+<h1>{{restaurant.name}}</h1>
+
+<form action="/{{restaurant.id}}/edit/" method="POST">
+    <input type="text" placeholder="{{restaurant.name}}" size="30" name="name">
+    <input type="submit" value="Update">
+    <a href="/restaurant/{{restaurant.id}}/menu/" >Cancel</a>
+</form>
