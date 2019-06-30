@@ -31,8 +31,7 @@ def newMenuItem(restaurant_id):
     else:
         return render_template('newmenuitem.html', restaurant_id=restaurant_id)
 
-@app.route('/restaurant/<int:restaurant_id>/<int:menu_id>/edit',
-           methods=['GET', 'POST'])
+@app.route('/restaurant/<int:restaurant_id>/<int:menu_id>/edit', methods=['GET', 'POST'])
 def editMenuItem(restaurant_id, menu_id):
     editedItem = session.query(MenuItem).filter_by(id=menu_id).one()
     if request.method == 'POST':
@@ -67,12 +66,12 @@ def deleteMenuItem(restaurant_id, menu_id):
 def restaurantMenuJSON(restaurant_id):
     restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
     items = session.query(MenuItem).filter_by(restaurant_id = restaurant.id)
-    return jsonify(Menuitems=[i.serialize for i in items])
+    return jsonify(Menuitems = [i.serialize for i in items])
 
 @app.route('/restaurant/<int:restaurant_id>/menu/<int:menu_id>/JSON')
 def restaurantMenuItemJSON(restaurant_id, menu_id):
     item = session.query(MenuItem).filter_by(id=menu_id).one()
-    return jsonify(Menuitem= item.serialize)
+    return jsonify(Menuitem = item.serialize)
 
 
 if __name__ == "__main__":

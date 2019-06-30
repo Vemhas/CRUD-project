@@ -1,16 +1,17 @@
-<html>
-   <body>
-    <h1>All the availible restaurants</h1>
-    <ul>
-        {%for restaurant in restaurants:%}
-        <li>{{restaurant.name}}</li>
-        <li>{{restaurant.id}}</li>
-        <a href="{{url_for('showMenu', restaurant_id=restaurant.id)}}">Check out the menu at {{restaurant.name}}</a>
-        <br>
-        {% endfor %}
-    </ul>
-    <a href="/restaurant/new/">Create a New restaurant</a>
-    
+{% extends "layout.html" %}
+{% block body %}
 
-   </body> 
-</html>
+<h1>Restaurants</h1>
+
+<div class="restaurants">
+        
+        {%for restaurant in restaurants:%}
+        <p class="rest"> <a href="{{url_for('showMenu', restaurant_id=restaurant.id)}}">{{restaurant.name}}</a></p>
+        {% endfor %}
+</div>
+
+<form action="/restaurant/new">
+        <button class="btn">Create a New restaurant</button>
+</form>
+
+{% endblock %}

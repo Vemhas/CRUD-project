@@ -1,12 +1,17 @@
+{% extends "layout.html" %}
+{% block body %}
+
 <h1>Create a new menu item for {{restaurant.name}}</h1>
 <form action="{{url_for('newMenuItem',restaurant_id=restaurant.id)}}", method="POST">
-    <input type="text" size="30" name="name" placeholder="Name"><br>
-    <input type="text" size="30" name="description" placeholder="Description"><br>
-    <input type="text" size="30" name="price" placeholder="Price"><br>
-    <input type="radio" name="course" value="Appetizer">Appetizer<br>
-    <input type="radio" name="course" value="Entree">Entree<br>
-    <input type="radio" name="course" value="Dessert">Dessert<br>
-    <input type="radio" name="course" value="Beverage">Beverage<br>
-    <input type="submit" value="Create">
+    <input class="input" type="text" size="30" name="name" placeholder="Name"><br>
+    <input class="input" type="text" size="30" name="description" placeholder="Description"><br>
+    <input class="input" type="text" size="30" name="price" placeholder="Price"><br>
+    <input class="radio" type="radio" name="course" value="Appetizer">Appetizer<br>
+    <input class="radio" type="radio" name="course" value="Entree">Entree<br>
+    <input class="radio" type="radio" name="course" value="Dessert">Dessert<br>
+    <input class="radio" type="radio" name="course" value="Beverage">Beverage<br>
+    <input class="btn" type="submit" value="Create">
     <a href="/restaurant/{{restaurant.id}}/menu/" >Cancel</a>
 </form>
+
+{% endblock %}

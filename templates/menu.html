@@ -1,24 +1,37 @@
+{% extends "layout.html" %}
+{% block body %}
 <h1>{{restaurant.name}}´s menu:</h1>
-<a href="/{{restaurant.id}}/edit/">Update restaurat name</a>
-<br>
-<a href="/{{restaurant.id}}/delete/">Delete restaurant </a>
-<br>
-<a href="/restaurant/{{restaurant.id}}/menu/new/">Add an new menu item</a>
+
+<form action="/{{restaurant.id}}/edit/">
+        <button class="btn">Update restaurat name</button>
+</form>
+
+<form action="/{{restaurant.id}}/delete/">
+        <button class="btn">Delete restaurant</button>
+</form>
+
+<form action="/restaurant/{{restaurant.id}}/menu/new/">
+        <button class="btn">Add an new menu item</button>
+</form>
+
+
 {%for i in items%}
-<div>
-        <br>
-        <p>Name:</p>
+<div class="menuitem">
+        <p><strong>Name:</strong></p>
         <p>{{i.name}}</p>
-        <p>Description:</p>
+        <p><strong>Description:</strong></p>
         <p>{{i.description}}</p>
-        <p>Price:</p>
+        <p><strong>Price:</strong></p>
         <p>{{i.price}}</p>
-        <p>Course:</p>
+        <p><strong>Course:</strong></p>
         <p>{{i.course}}</p>
         <br>
-        <a href="/restaurant/{{restaurant.id}}/{{i.id}}/edit/">Edit</a>
-        <br>
-        <a href="/restaurant/{{restaurant.id}}/{{i.id}}/delete/">Delete</a>
-        <br>
+        <form action="/restaurant/new">
+                <button class="btn" formaction="/restaurant/{{restaurant.id}}/{{i.id}}/edit/">Edit</button>
+                <button class="btn" formaction="/restaurant/{{restaurant.id}}/{{i.id}}/delete/">Delete</button>
+        </form>
+
 </div>
 {%endfor%}
+
+{% endblock %}
